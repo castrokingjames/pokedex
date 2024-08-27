@@ -9,10 +9,13 @@ koin = "3.5.6"
 koin-annotations = "1.3.1"
 koin-compiler = "1.3.1"
 sqldelight = "2.0.2"
-ksp = "2.0.10-1.0.24"
 decompose = "3.2.0-alpha04"
 essenty = "2.2.0-alpha04"
 kotlin-coroutine = "1.9.0-RC.2"
+kotlin-serialization = "1.7.1"
+ktor = "2.3.12"
+spotless = "6.25.0"
+
 
 [plugins]
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
@@ -26,9 +29,10 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]
 compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
@@ -38,6 +42,14 @@ koin = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin-annotations" }
 koin-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin-compiler" }
+
+ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { group="io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { group="io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { group="io.ktor", name = "ktor-client-js", version.ref = "ktor" }
+ktor-client-logging = { group="io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-client-content-negotiation = { group="io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-json = { group="io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
 essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
@@ -49,5 +61,9 @@ essenty-lifecycle-coroutines = { group = "com.arkivanov.essenty", name = "lifecy
 sqldelight-web = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqldelight" }
 sqldelight-extension = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
+kotlin-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlin-coroutine" }
 kotlin-coroutines-swing =  { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlin-coroutine" }
 kotlin-coroutines-android =  { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlin-coroutine" }
+kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization" }
+
+logback = "ch.qos.logback:logback-classic:1.5.7"

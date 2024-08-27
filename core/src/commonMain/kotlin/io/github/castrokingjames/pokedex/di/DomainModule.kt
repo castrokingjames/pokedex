@@ -15,24 +15,11 @@
  */
 package io.github.castrokingjames.pokedex.di
 
-import io.github.castrokingjames.pokedex.di.annotation.Dispatcher
-import kotlin.coroutines.CoroutineContext
-import kotlinx.coroutines.CoroutineDispatcher
-import org.koin.core.qualifier.named
-import org.koin.dsl.bind
+import io.github.castrokingjames.pokedex.usecase.LoadPokemonListUseCase
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
-actual val dispatchersModule = module {
+val domainModule = module {
 
-  single(named<Dispatcher.IO>()) {
-    kotlinx.coroutines.Dispatchers.IO
-  } bind CoroutineContext::class
-
-  single(named<Dispatcher.Main>()) {
-    kotlinx.coroutines.Dispatchers.Main
-  } bind CoroutineContext::class
-
-  single(named<Dispatcher.Main>()) {
-    kotlinx.coroutines.Dispatchers.Main
-  } bind CoroutineDispatcher::class
+  factoryOf(::LoadPokemonListUseCase)
 }

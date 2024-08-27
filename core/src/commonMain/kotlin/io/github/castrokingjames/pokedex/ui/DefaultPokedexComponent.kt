@@ -1,41 +1,42 @@
+/*
+ * Copyright 2024, King James Castro and project contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.github.castrokingjames.pokedex.ui
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
-import io.github.castrokingjames.pokedex.platform.Platform
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import io.github.castrokingjames.pokedex.model.Pokemon
+import io.github.castrokingjames.pokedex.usecase.LoadPokemonListUseCase
 import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 class DefaultPokedexComponent constructor(
-    componentContext: ComponentContext,
-    coroutineContext: CoroutineContext,
-) : PokedexComponent, ComponentContext by componentContext, KoinComponent {
+  getPokemonListUseCase: LoadPokemonListUseCase,
+  componentContext: ComponentContext,
+  coroutineContext: CoroutineContext,
+) : PokedexComponent, ComponentContext by componentContext {
 
-    private val platform: Platform by inject<Platform>()
+  private val scope = coroutineScope(coroutineContext + SupervisorJob())
 
-    override val name: String = platform.name()
-
-    private val scope = coroutineScope(coroutineContext + SupervisorJob())
-
-    private val _timer = MutableStateFlow(0L)
-    override val timer = _timer.asStateFlow()
-
-    private var job: Job? = null
-
-    override fun startTimer() {
-        job?.cancel()
-        job = scope.launch {
-            while (true) {
-                delay(1000)
-                _timer.value++
-            }
-        }
-    }
+  override val pokemons: StateFlow<List<Pokemon>> = getPokemonListUseCase()
+    .stateIn(
+      scope,
+      started = SharingStarted.WhileSubscribed(5000L),
+      initialValue = emptyList(),
+    )
 }

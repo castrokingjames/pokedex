@@ -36,3 +36,9 @@ include(":desktop")
 include(":web")
 include(":ui:common")
 include(":ui:compose")
+include(":datasource:remote")
+include(":domain")
+include(":data")
+include(":model")
+
+
